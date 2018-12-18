@@ -17,7 +17,7 @@ namespace CommandWatcherUtility
         private static StreamWriter stream;
         private static StringBuilder buffer;
         private static FileSystemWatcher watcher;
-        private static Timer timer = new Timer(new TimerCallback(DoChange));
+        private static Timer timer = new Timer(new TimerCallback(DoChanged));
 
         public static void Start()
         {
@@ -50,10 +50,10 @@ namespace CommandWatcherUtility
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
             timer.Dispose();
-            timer = new Timer(new TimerCallback(DoChange), null, 999, Timeout.Infinite);
+            timer = new Timer(new TimerCallback(DoChanged), null, 999, Timeout.Infinite);
         }
 
-        private static void DoChange(object state)
+        private static void DoChanged(object state)
         {
             var lines = File.ReadAllLines(iPath);
             stream.WriteLine(lines.Last());
