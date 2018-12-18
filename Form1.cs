@@ -8,8 +8,8 @@ namespace Example
         public Form1()
         {
             InitializeComponent();
-            CommandWatcher.iPath = @"C:\Users\user\Desktop\TEST\input.txt";
-            CommandWatcher.oPath = @"C:\Users\user\Desktop\TEST\output.txt";
+            CommandWatcher.iPath = @"D:\TEST\input.txt";
+            CommandWatcher.oPath = @"D:\TEST\output.txt";
             CommandWatcher.Start();
         }
 
