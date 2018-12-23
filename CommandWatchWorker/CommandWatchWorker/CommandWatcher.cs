@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,7 +15,8 @@ namespace CommandWatcherUtility
         private static StreamWriter stream;
         private static StringBuilder buffer;
         private static FileSystemWatcher watcher;
-        private static Timer timer = new Timer(new TimerCallback(DoChanged));
+        private static Timer iTimer = new Timer(new TimerCallback(DoChanged));
+        private static Timer oTimer = new Timer(new TimerCallback(DoReceived));
 
         public static void Start()
         {
@@ -49,8 +48,8 @@ namespace CommandWatcherUtility
 
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
-            timer.Dispose();
-            timer = new Timer(new TimerCallback(DoChanged), null, 888, Timeout.Infinite);
+            iTimer.Dispose();
+            iTimer = new Timer(new TimerCallback(DoChanged), null, 211, Timeout.Infinite);
         }
 
         private static void DoChanged(object state)
@@ -62,16 +61,16 @@ namespace CommandWatcherUtility
         private static void OnReceived(object sender, DataReceivedEventArgs e)
         {
             buffer.AppendLine(e.Data);
-            timer.Dispose();
-            timer = new Timer(new TimerCallback(DoReceived), null, 888, Timeout.Infinite);
+            oTimer.Dispose();
+            oTimer = new Timer(new TimerCallback(DoReceived), null, 811, Timeout.Infinite);
         }
 
         private static void DoReceived(object state)
         {
-            var msg = buffer.ToString();
+            var output = buffer.ToString();
             buffer.Length = 0;
             using (StreamWriter stream = new StreamWriter(oPath, true))
-                stream.Write(msg);
+                stream.Write(output);
         }
 
         public static void Stop()
