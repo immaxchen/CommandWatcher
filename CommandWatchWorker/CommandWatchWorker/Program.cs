@@ -11,15 +11,8 @@ namespace CommandWatchWorker
         static void Main(string[] args)
         {
             args = args.Select(s => s.Trim()).ToArray();
-            try
-            {
-                File.WriteAllText(args[0], string.Empty);
-                File.WriteAllText(args[1], string.Empty);
-            }
-            catch
-            {
-                return;
-            }
+            File.WriteAllText(args[0], string.Empty);
+            File.WriteAllText(args[1], string.Empty);
 
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             CommandWatcher.iPath = args[0];

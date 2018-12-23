@@ -53,8 +53,6 @@ namespace CommandWatchManager
             {
                 Thread.Sleep(999);
                 var args = File.ReadAllLines(path).Select(s => s.Trim()).ToArray();
-                File.WriteAllText(args[0], string.Empty);
-                File.WriteAllText(args[1], string.Empty);
                 var process = new Process();
                 process.StartInfo.FileName = "CommandWatchWorker.exe";
                 process.StartInfo.Arguments = String.Format("\"{0}\" \"{1}\"", args[0], args[1]);
